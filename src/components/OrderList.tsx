@@ -114,13 +114,19 @@ const OrderList: React.FC = () => {
       <div className="col-md-6">
         {currentOrder ? (
           <div>
-            <h4>Tutorial</h4>
+            <h4>Order</h4>
             <div>
               <label>
                 <strong>Name:</strong>
               </label>{" "}
               {currentOrder.Name}
             </div>
+            if(currentOrder.Items && 
+            <div>
+
+    <ul>{currentOrder.Items!!.map(item => <li key={item}> {item} </li>)}</ul>
+  </div>
+            )
 
             <Link
               to={"/orders/" + currentOrder.Id}

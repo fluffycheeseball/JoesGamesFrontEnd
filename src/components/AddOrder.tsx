@@ -10,6 +10,7 @@ const AddOrder: React.FC = () => {
   };
   const [order, setOrder] = useState<IOrder>(initialOrderState);
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [item, setItem] = useState<string>('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(`event`, event);
@@ -17,12 +18,28 @@ const AddOrder: React.FC = () => {
     setOrder({ ...order, Name: value });
   };
 
+  const handleItemChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //console.log(`event`, event);
+    //const { value } = event.target;
+    //setOrder({ ...order, Items: [...order.Items!!, input] });
+    const { value } = event.target;
+    //console.log(`order`, order);
+    setItem(value);
+  };
+
+  const addItem = () => {
+    if(item && item.length >0) {
+ setOrder({ ...order, Items: [...order.Items!!, item]});
+    }
+  }
+
   const saveOrder = () => {
     var data = {
       Name: order.Name,
       Items:order.Items,
  
     };
+    console.log(`data`, data);   
 
     OrderService.create(data)
       .then((response: any) => {
@@ -66,8 +83,24 @@ const AddOrder: React.FC = () => {
               onChange={handleInputChange}
               name="ordername"
             />
-          </div>
 
+<div></div>
+            <label htmlFor="orderitem">New Item</label>
+            <input
+              type="text"
+              className="form-control"
+              id="orderitem"
+              required
+              value={item}
+              onChange={handleItemChange}
+              name="orderitem"
+            />
+          </div>
+          <div>
+          <button onClick={addItem} className="btn btn-success">
+            Add Item
+          </button>
+          </div>
           <button onClick={saveOrder} className="btn btn-success">
             Submit
           </button>
